@@ -1,0 +1,11 @@
+{
+  "name": "aeneas_node",
+  "version": "1.0.0",
+  "description": "A node wrapper over the aeneas aligner",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Pietro Passarelli <pietro.passarelli@gmail.com> (http://pietropassarelli.com)",
+  "license": "ISC"
+}
