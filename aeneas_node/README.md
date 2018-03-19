@@ -2,47 +2,33 @@
 
 A node wrapper for Aeneas 
 
-
-
 Equivalent to run example using [Aeneas runtime configurations](https://www.readbeyond.it/aeneas/docs/clitutorial.html#the-runtime-configuration).
 
 ```bash
-/usr/local/bin/aeneas_execute_task "./data/2017_07_19_11_26_13-Cd56vF3lZ_Q.mp4" "./examples/blaine.srt" "task_language=eng|os_task_file_format=srt|is_text_type=subtitles|is_audio_file_head_length=0|is_audio_file_tail_length=0|task_adjust_boundary_nonspeech_min=1.000|task_adjust_boundary_nonspeech_string=REMOVE|task_adjust_boundary_algorithm=percent|task_adjust_boundary_percent_value=75|is_text_file_ignore_regex=[*]" ./examples/2017_07_19_11_26_13-Cd56vF3lZ_Q.mp4.srt
+/usr/local/bin/aeneas_execute_task "./data/Andrea_Ginzburg.webm" "./data/Andrea_Ginzburg.webm.segmented.txt" "task_language=eng|os_task_file_format=srt|is_text_type=subtitles|is_audio_file_head_length=0|is_audio_file_tail_length=0|task_adjust_boundary_nonspeech_min=1.000|task_adjust_boundary_nonspeech_string=REMOVE|task_adjust_boundary_algorithm=percent|task_adjust_boundary_percent_value=75|is_text_file_ignore_regex=[*]" ./examples/Andrea_Ginzburg.webm.srt
 ```
 
 ## Input 
 Takes input as segmented text as example. line separated by spaces. 
+segmented for captions/subtitles alignement. 
 
 <!-- link to Aeneas explanation.  -->
 
 ```text
-All right, yeah, I'm good my day, is literally going from bad.
+Buonasera, a questo incontro con 
+il professore avrai leasing, che 
 
-To worse, I mean I wasn't even having a good day to start with, and then I just cut these texts from dwara and I'm just like what my day.
+ringraziano di essere, non è di 
+aver, accettato dallo stupido per 
 
-Yes, please.
+questa riflessione e stiamo 
+cercando di costruire scritti sui 
 
-I seen you like this before.
+temi che che riguardano la nostra 
+situazione socio economica 
 
-Should we take five minutes sifting through this, I knew you were gon na say that yes, okay, don't get fight all right.
-
-That'S why the task?
-
-What is it you want me to help me think through?
-
-I don't even know where to start I've just hang on, and what do I actually want to get out of this?
-
-I just need.
-
-I just need to sort this out basically, because I've got somewhere to go in about half an hour and then I've just got these texts this more than I can actually sort out in half an hour, and I need to sort of figure out what I'm gon Na do because I don't even actually know what to do okay.
-
-So what is it that you need to solder?
-
-Well, okay, can I just tell you what's happened or - and I think we've got to tell him what okay all right.
-
-Basically, I need like a housing solution for Laura, because she's just texted me saying she's got nowhere to live, so I just need to do something: to sort it out: okay, yeah, okay!
-
-Is that all right, yeah?
+politica nella quale ci troviamo 
+tutti in questi, giorni nostri, 
 ```
 
 ## Output
@@ -51,41 +37,57 @@ returns an srt, caption file. See example below
 
 ```srt
 1
-00:00:00,000 --> 00:00:16,520
-All right, yeah, I'm good my day, is literally going from bad.
+00:00:00,000 --> 00:00:07,400
+Buonasera, a questo incontro con
+il professore avrai leasing, che
 
 2
-00:00:16,520 --> 00:00:30,240
-To worse, I mean I wasn't even having a good day to start with, and then I just cut these texts from dwara and I'm just like what my day.
+00:00:07,400 --> 00:00:12,520
+ringraziano di essere, non è di
+aver, accettato dallo stupido per
 
 3
-00:00:30,240 --> 00:00:31,720
-Yes, please.
+00:00:12,520 --> 00:00:18,720
+questa riflessione e stiamo
+cercando di costruire scritti sui
 
 4
-00:00:31,720 --> 00:00:34,520
-I seen you like this before.
+00:00:18,720 --> 00:00:28,040
+temi che che riguardano la nostra
+situazione socio economica
 
 5
-00:00:34,520 --> 00:00:43,560
-Should we take five minutes sifting through this, I knew you were gon na say that yes, okay, don't get fight all right.
-
-6
-00:00:43,560 --> 00:00:45,840
-That'S why the task?
-
-7
-00:00:45,840 --> 00:00:50,040
-What is it you want me to help me think through?
-
-8
-00:00:50,040 --> 00:01:05,800
-I don't even know where to start I've just hang on, and what do I actually want to get out of this?
+00:00:28,040 --> 00:00:34,080
+politica nella quale ci troviamo
+tutti in questi, giorni nostri,
 
 ```
 
+## Usage
+
+see [`index.test.js`](./index.test.js) for example usage.
+
+
+## Installing dependencies
+
+Unfortunatelly `Aeneas` has  a ton of dependecies
+
+- [Aeneas install documentation](https://github.com/readbeyond/aeneas/blob/master/wiki/INSTALL.md)
+
+Lukily there installers, for mac, windows, and linux to simplify the process  
+
+- [`aeneas-installer`](https://github.com/sillsdev/aeneas-installer) (see [`releases` section](https://github.com/sillsdev/aeneas-installer/releases), and [here for linux version](https://github.com/sillsdev/aeneas-installer/issues/30)) 
+
+However it be great to be able to make the module more self contained and point to packaged binaries of the dependencies rather then relying on system wide installation of those.  
+Eg for use cases such as packaging with [electron](https://electronjs.org/) to make cross platform desktop apps.
+
+Similar in concept to [`ffmpeg-static`](https://github.com/eugeneware/ffmpeg-static) node module that contains ffmpeg binary for os, win and linux.
+
+## `Aeneas` supported languages
+
+[List of 38 supported languages](https://github.com/readbeyond/aeneas#supported-features)
+
 ## TODO: 
 
-- [ ] add export to module
-- [ ] add test.index.js example usage. 
+- [ ] Make dependencies self contained (see install dependencies section). 
 
