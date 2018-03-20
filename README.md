@@ -6,14 +6,29 @@ Node module that given audio or video media source and corresponding  plain text
 <!-- https://github.com/readbeyond/lachesis -->
 
 
+<!-- https://docs.google.com/document/d/1yrPSgLnGW4mWBXCHAxR0STzm--lpV_6nglcqhM8EkDc/edit#heading=h.jc3as3upygx6 -->
+
+# Steps
+
+- 0.Punctuation -
+- _remove line breaks_
+- 1.Text Segmentation +
+- 2.Line brek between stences +
+- 3.Fold char limit per line +
+- 4.Divide into two lines +
+- 5.Aeneas `-->` subtitl file +
+
+
 ## components
+
+### ~ 0.Punctuation 
+
+Add punctuation 
+
+<!-- Punctuator 2 library  -->
 
 
 ### ~ 1.Text Segmentation 
-
-<!-- https://docs.google.com/document/d/1yrPSgLnGW4mWBXCHAxR0STzm--lpV_6nglcqhM8EkDc/edit#heading=h.jc3as3upygx6 -->
-
-
 
 <!-- See module readme for more details -->
 
@@ -44,6 +59,8 @@ It does speech to text and then automated consistent translation and then text t
 perl sentence-boundary.pl -d HONORIFICS -i "$f" -o test.txt
 ```
 
+list of [`HONORIFICS` here](https://github.com/polizoto/align_transcript/blob/master/HONORIFICS)
+
 ---
 
 ### ~  2.Line brek between stences
@@ -54,6 +71,13 @@ separates each line (a sentence) with an empty line.
 
 #### Input
 is output of previous section 
+
+
+```
+Hi there, my name is Ian police - are recording this video to talk about mercury for the folks at a tech daily conference in New York.
+Sorry, I can't be there in person, so we are building a prototype funded in part by Google DNI of a web-based computer, assisted transcription and translation tool with some video editing features.
+It does speech to text and then automated consistent translation and then text to speech generate synthetic voices at time codes that line up with the original original audio.
+```
 
 #### Output
 
@@ -88,6 +112,14 @@ he 2nd line (pictured) takes each of sentences (now separated by an empty line) 
 
 #### Input
 is output of previous section 
+
+```
+Hi there, my name is Ian police - are recording this video to talk about mercury for the folks at a tech daily conference in New York.
+
+Sorry, I can't be there in person, so we are building a prototype funded in part by Google DNI of a web-based computer, assisted transcription and translation tool with some video editing features.
+
+It does speech to text and then automated consistent translation and then text to speech generate synthetic voices at time codes that line up with the original original audio.
+```
 
 #### Output
 
@@ -139,6 +171,27 @@ break/add line break  `\n` every two or more line breaks.
 
 #### Input
 is output of previous section 
+
+```
+
+Hi there, my name is Ian police -
+are recording this video to talk
+about mercury for the folks at a
+tech daily conference in New York.
+
+Sorry, I can’t be there in person,
+so we are building a prototype
+funded in part by Google DNI of a
+web-based computer, assisted
+transcription and translation tool
+with some video editing features.
+
+It does speech to text and then
+automated consistent translation
+and then text to speech generate
+synthetic voices at time codes that
+line up with the original original
+audio.
 
 #### output
 

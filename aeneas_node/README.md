@@ -11,8 +11,9 @@ Equivalent to run example using [Aeneas runtime configurations](https://www.read
 ## Input 
 Takes input as segmented text as example. line separated by spaces. 
 segmented for captions/subtitles alignement. 
+With or without punctuation. 
 
-<!-- link to Aeneas explanation.  -->
+<!-- TODO: add link to Aeneas explanation.  -->
 
 ```text
 Buonasera, a questo incontro con 
