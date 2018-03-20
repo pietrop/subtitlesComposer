@@ -1,6 +1,6 @@
 "use strict";
 
-function divideIntroTwoLines(text){
+function divideIntoTwoLines(text){
 	var lines = text.split("\n");
 
 	var counter = 0;
@@ -21,4 +21,4 @@ function divideIntroTwoLines(text){
 	return result.join(" ").trim();
 }
 
-module.exports = divideIntroTwoLines;
+module.exports = divideIntoTwoLines;

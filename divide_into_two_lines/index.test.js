@@ -1,5 +1,5 @@
 "use strict";
-var divideIntroTwoLines = require('./index.js');
+var divideIntoTwoLines = require('./index.js');
 
 var sampleText  =`Hi there, my name is Ian police -
 are recording this video to talk
@@ -47,6 +47,6 @@ var expectedOutput = `Hi there, my name is Ian police -
 
 
 test('divide into two lines', () => {
-	var result = divideIntroTwoLines(sampleText);
+	var result = divideIntoTwoLines(sampleText);
   	expect(result).toBe(expectedOutput);
 });
