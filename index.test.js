@@ -46,7 +46,7 @@ test.skip('Subtitles composer - No punctuation text input', () => {
 		punctuationTextContent: punctuationTextContent,
 		numberOfCharPerLine: 35,
 		// where to save intermediate segmented text file needed for aeneas module 
-		segmentedTextInput: './tmp/segmentedtext.no-punctuation..tmp.txt',
+		segmentedTextInput: './tmp/segmentedtext.no-punctuation.tmp.txt',
 		//audio or video file to use for aeneas alignement as original source 
 		mediaFile: './sample_data/Andrea_Ginzburg.webm',
 		outputCaptionFile: "./tmp/Andrea_Ginzburg.no-punctuation."+captionFileFormat,
