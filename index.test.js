@@ -2,7 +2,8 @@
 const fs = require('fs');
 const subtitleComposer = require('./index.js');
 
-test('Subtitles composer', () => {
+
+test.skip('Subtitles composer, text input with punctuation', () => {
 	
 	var punctuationTextFile = './sample_data/Andrea_Ginzburg.webm_punctuation.txt';
 	var punctuationTextContent = fs.readFileSync(punctuationTextFile).toString();
@@ -26,6 +27,39 @@ test('Subtitles composer', () => {
 		function(filePath){
 			console.log('filePath', filePath);
 			var result = fs.readFileSync(filePath).toString();
+			console.log(result)
+			//check content of file match expected content of composed srt file
+			expect(result).toEqual(expectedOutput);
+	});
+
+});
+
+
+test.skip('Subtitles composer - No punctuation text input', () => {
+	
+	var punctuationTextFile = './sample_data/Andrea_Ginzburg.webm_no-punctuation.txt';
+	var punctuationTextContent = fs.readFileSync(punctuationTextFile).toString();
+
+	var captionFileFormat = "srt";
+
+	subtitleComposer({
+		punctuationTextContent: punctuationTextContent,
+		numberOfCharPerLine: 35,
+		// where to save intermediate segmented text file needed for aeneas module 
+		segmentedTextInput: './tmp/segmentedtext.no-punctuation..tmp.txt',
+		//audio or video file to use for aeneas alignement as original source 
+		mediaFile: './sample_data/Andrea_Ginzburg.webm',
+		outputCaptionFile: "./tmp/Andrea_Ginzburg.no-punctuation."+captionFileFormat,
+		audio_file_tail_length: 0,
+		audio_file_head_length : 0,
+		captionFileFormat : captionFileFormat,
+		language: 'ita'
+
+		}, 
+		function(filePath){
+			console.log('filePath', filePath);
+			var result = fs.readFileSync(filePath).toString();
+			console.log(result)
 			//check content of file match expected content of composed srt file
 			expect(result).toEqual(expectedOutput);
 	});
