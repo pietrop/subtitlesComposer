@@ -1,5 +1,5 @@
 {
-  "name": "subtitlecomposer",
+  "name": "subtitlescomposer",
   "version": "1.0.0",
   "description": "Node module that given audio or video media source and corresponding  plain texttranscription without timecodes, realign the texts and produces a subtitle file, eg `srt`.",
   "main": "index.js",

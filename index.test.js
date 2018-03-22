@@ -8,6 +8,8 @@ test.skip('Subtitles composer, text input with punctuation', () => {
 	var punctuationTextFile = './sample_data/Andrea_Ginzburg.webm_punctuation.txt';
 	var punctuationTextContent = fs.readFileSync(punctuationTextFile).toString();
 
+	//TODO: - _remove line breaks_
+
 	var captionFileFormat = "srt";
 
 	subtitleComposer({

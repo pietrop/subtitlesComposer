@@ -1,254 +1,148 @@
-# `subtitleComposer`
+# `subtitlesComposer`
 
-Node module that given audio or video media source and corresponding  plain texttranscription without timecodes, realign the texts and produces a subtitle file, eg `srt`.  
+Node module that given a media file (audio or video) and corresponding plain texttranscription without timecodes, realign the texts and produces a subtitle file, eg `srt`. 
 
+## Components
 
-<!-- https://github.com/readbeyond/lachesis -->
-
-
-<!-- https://docs.google.com/document/d/1yrPSgLnGW4mWBXCHAxR0STzm--lpV_6nglcqhM8EkDc/edit#heading=h.jc3as3upygx6 -->
-
-# Steps
-
-- 0.Punctuation -
-- _remove line breaks_
-- 1.Text Segmentation +
-- 2.Line brek between stences +
-- 3.Fold char limit per line +
-- 4.Divide into two lines +
-- 5.Aeneas `-->` subtitl file +
+The module is broken down into discrete components for the various stages of prepping the text for the Aeneas input. 
+This is to make it easier to write automated tests for each, as well as for reusability in case use case requiring similar building blocks might come up in the future. Also last but not least if a more effective way to achive one of the reuslts come up it should make it eaiser to refactor the internal workings. 
 
 
-## components
-
-### ~ 0.Punctuation 
-
-Add punctuation 
-
-<!-- Punctuator 2 library  -->
+The components prep the text in order to use the "Aeneas `subtitles`" "format" when providing text to the aeneas aligner. This consists of two lines of text separated by one line break, to increasea alignement accuracy of the aeneas tool. It then calls aeneas through a node wrapper and return the path to the caption file.
 
 
-### ~ 1.Text Segmentation 
+## Setup 
 
-<!-- See module readme for more details -->
+## Depencencies
+You'd need to have Aeneas and related dependencies installed on your system. Luckily there's a [`aeneas-installer`](https://github.com/sillsdev/aeneas-installer) (see [`releases` section](https://github.com/sillsdev/aeneas-installer/releases), and [here for linux version](https://github.com/sillsdev/aeneas-installer/issues/30)) 
 
-#### Input
 
-Plain text, **with punctuation** all on one line 
+## Install
 
 ```
-Hi there, my name is Ian police - are recording this video to talk about mercury for the folks at a tech daily conference in New York. Sorry, I can't be there in person, so we are building a prototype funded in part by Google DNI of a web-based computer, assisted transcription and translation tool with some video editing features. It does speech to text and then automated consistent translation and then text to speech generate synthetic voices at time codes that line up with the original original audio.
+npm install
 ```
 
-#### Out 
 
-Puts each sentence that ends with full stop on new line. `\n`.
-
-```
-Hi there, my name is Ian police - are recording this video to talk about mercury for the folks at a tech daily conference in New York.
-Sorry, I can't be there in person, so we are building a prototype funded in part by Google DNI of a web-based computer, assisted transcription and translation tool with some video editing features.
-It does speech to text and then automated consistent translation and then text to speech generate synthetic voices at time codes that line up with the original original audio.
-```
-
-#### algo 
-
-[Joseph Polizzotto's perl script identify sentence boundaries sentence-boundary.pl ](https://github.com/polizoto/segment_transcript/blob/master/sentence-boundary.pl)
-
-```perl
-# segment transcript into sentences
-perl sentence-boundary.pl -d HONORIFICS -i "$f" -o test.txt
-```
-
-list of [`HONORIFICS` here](https://github.com/polizoto/align_transcript/blob/master/HONORIFICS)
-
----
-
-### ~  2.Line brek between stences
-
-<!-- See module readme for more details -->
-separates each line (a sentence) with an empty line.
-<!-- Adds a line break `\n\n` in between in each stence.  -->
-
-#### Input
-is output of previous section 
-
-
-```
-Hi there, my name is Ian police - are recording this video to talk about mercury for the folks at a tech daily conference in New York.
-Sorry, I can't be there in person, so we are building a prototype funded in part by Google DNI of a web-based computer, assisted transcription and translation tool with some video editing features.
-It does speech to text and then automated consistent translation and then text to speech generate synthetic voices at time codes that line up with the original original audio.
-```
-
-#### Output
-
-```
-Hi there, my name is Ian police - are recording this video to talk about mercury for the folks at a tech daily conference in New York.
-
-Sorry, I can't be there in person, so we are building a prototype funded in part by Google DNI of a web-based computer, assisted transcription and translation tool with some video editing features.
-
-It does speech to text and then automated consistent translation and then text to speech generate synthetic voices at time codes that line up with the original original audio.
-```
-
-#### algo 
-
-```bash
-# Add blank line after every new line
-sed -e 'G' test.txt > test2.txt
-```
-
-Equivalent to 
+## Usage
 
 ```js
-test.replace(/\n/g,"\n\n")
-```
+const subtitlesComposer = require('./index.js');
+var punctuationTextFile = './sample_data/Andrea_Ginzburg.webm_no-punctuation.txt';
+var punctuationTextContent = fs.readFileSync(punctuationTextFile).toString();
+var captionFileFormat = "srt";
 
----
+subtitlesComposer({
+	punctuationTextContent: punctuationTextContent,
+	// the number of character per srt subtitle file line.
+	numberOfCharPerLine: 35,
+	// where to save intermediate segmented text file needed for aeneas module 
+	segmentedTextInput: './tmp/segmentedtext.tmp.txt',
+	//audio or video file to use for aeneas alignement as original source 
+	mediaFile: './sample_data/Andrea_Ginzburg.webm',
+	outputCaptionFile: "./tmp/Andrea_Ginzburg."+captionFileFormat,
+	audio_file_tail_length: 0,
+	audio_file_head_length : 0,
+	captionFileFormat : captionFileFormat,
+	language: 'ita'
 
-### ~  3.Fold char limit per line
-
-folds each line at char limit. eg 35 char. 
-
-he 2nd line (pictured) takes each of sentences (now separated by an empty line) and places a new line mark at the end of the word that exceeds > 35 characters (if the sentence exceeds that number)
-
-#### Input
-is output of previous section 
-
-```
-Hi there, my name is Ian police - are recording this video to talk about mercury for the folks at a tech daily conference in New York.
-
-Sorry, I can't be there in person, so we are building a prototype funded in part by Google DNI of a web-based computer, assisted transcription and translation tool with some video editing features.
-
-It does speech to text and then automated consistent translation and then text to speech generate synthetic voices at time codes that line up with the original original audio.
-```
-
-#### Output
-
-```
-
-Hi there, my name is Ian police -
-are recording this video to talk
-about mercury for the folks at a
-tech daily conference in New York.
-
-Sorry, I can’t be there in person,
-so we are building a prototype
-funded in part by Google DNI of a
-web-based computer, assisted
-transcription and translation tool
-with some video editing features.
-
-It does speech to text and then
-automated consistent translation
-and then text to speech generate
-synthetic voices at time codes that
-line up with the original original
-audio.
-```
-
-#### algo
-
-```bash
-# Break each line at 35 characters
-fold -w 35 -s test2.txt > test3.txt
-```
-
-
-<!-- See module readme for more details -->
-
----
-
-### ~  4.Divide into two lines
-
-Take these new chunks and separate them further so that there are no more than two consecutive lines before an empty line.
-
-Creating block of text, with one or two consecutive lines.
-
-Groups “paragraphs” by `\n`.
-
-Of “paragraphs” if they are more then 1 line. 	
-break/add line break  `\n` every two or more line breaks.
-
-
-#### Input
-is output of previous section 
+	}, 
+	function(filePath){
+		console.log('filePath', filePath);
+		var result = fs.readFileSync(filePath).toString();
+		console.log(result)
+		
+});
 
 ```
 
-Hi there, my name is Ian police -
-are recording this video to talk
-about mercury for the folks at a
-tech daily conference in New York.
+### Example input
 
-Sorry, I can’t be there in person,
-so we are building a prototype
-funded in part by Google DNI of a
-web-based computer, assisted
-transcription and translation tool
-with some video editing features.
-
-It does speech to text and then
-automated consistent translation
-and then text to speech generate
-synthetic voices at time codes that
-line up with the original original
-audio.
-
-#### output
+Input could be with our without punctuation. Eg if text is from automatically generates speech to text system it might be likely to be without punctuation.
+As example below. 
 
 ```
-Hi there, my name is Ian police -
-are recording this video to talk
+buonasera a questo incontro con il professore avrai leasing che ringraziano di essere non è di aver accettato dallo stupido per questa riflessione e stiamo cercando di costruire scritti sui temi che che riguardano la nostra situazione socio economica
 
-about mercury for the folks at a
-tech daily conference in New York.
-
-Sorry, I can’t be there in person,
-so we are building a prototype
-
-funded in part by Google DNI of a
-web-based computer, assisted
-
-transcription and translation tool
-with some video editing features.
-
-It does speech to text and then
-automated consistent translation
-
-and then text to speech generate
-synthetic voices at time codes that
-
-line up with the original original
-audio.
+...
 ```
 
-#### algo
-```perl
-# Insert new line for every two lines, preserving paragraphs
-perl -00 -ple 's/.*\n.*\n/$&\n/mg' test3.txt > "$f"
+However if the input text is provided with punctuation, that is taken into account when generating the caption file.
+
+
+### Example output 
+
+Example `srt` subtitle/caption file output. See [Aeneas documentation for a comprehensive list of supported file formats](https://github.com/readbeyond/aeneas#supported-features) (`AUD, CSV, EAF, JSON, SMIL, SRT, SSV, SUB, TEXTGRID, TSV, TTML, TXT, VTT, XML`).
+
+
+```
+1
+00:00:00,000 --> 00:00:07,440
+buonasera a questo incontro con il
+professore avrai leasing che
+
+2
+00:00:07,440 --> 00:00:12,560
+ringraziano di essere non è di
+aver accettato dallo stupido per
+
+3
+00:00:12,560 --> 00:00:18,720
+questa riflessione e stiamo
+cercando di costruire scritti sui
+
+4
+00:00:18,720 --> 00:00:26,480
+temi che che riguardano la nostra
+situazione socio economica
+
+...
 ```
 
+# System overview
 
----
+See [steps](./steps.md) for a comprehensive overview of the various stages of input / output of the varios parts of the system. 
 
-### Notes
 
-Joseph Polizzotto
+## Background 
+
+From [Joseph Polizzotto](https://github.com/polizoto) initial bash scripts:
+
+- [`auto_captions_dl`](https://github.com/polizoto/auto_captions_dl)
+- [`auto_captions_dl_pc`](https://github.com/polizoto/auto_captions_dl_pc)
+- [`align_transcript`](https://github.com/polizoto/align_transcript)
+- [`segment_transcript_pc`](https://github.com/polizoto/segment_transcript_pc)
+
+
+[Joseph](https://github.com/polizoto) presented these [at textAV as a captioning workflow](https://pietropassarelli.gitbooks.io/textav/remote-presentations/captioning-workflow.html), [with a clear list of requirements](https://pietropassarelli.gitbooks.io/textav/remote-presentations/captioning-workflow/needs-for-captioning-tool.html) and then was [re-visited as one of the projects of the textAV unconference](https://pietropassarelli.gitbooks.io/textav/unconference-projects/captioning-workflow-system.html), exploring possibility for UI/UX user experience to make tool more user friendly. [See captioning app technical demo I made after the event](http://pietropassarelli.com/captioning-app.html). Also relevant the [textAV - Captioning workflow app R&D doc](https://docs.google.com/document/d/1yrPSgLnGW4mWBXCHAxR0STzm--lpV_6nglcqhM8EkDc/edit#heading=h.jc3as3upygx6).
+
+# Alternatives
+
+[Joseph Polizzotto](https://github.com/polizoto): 
 >BTW this method is a greedy segmentation method and is NOT ideal. It will eventually be improved by what AP is working on with Lachesis (https://github.com/readbeyond/lachesis ).
 
 >Nevertheless, it is improvement and does at least do two things: 1) keep chunks to around ~35 characters per line and 2) chunks sentences separately
 
+About lachesis:
+>lachesis automates the segmentation of a transcript into closed captions
+
+Using machine leaning. Altho currenlty not production ready. 
+
+# User interface
+
+At the moment for UX/UI you can use the free software [`closedcaptioncreator`](http://www.closedcaptioncreator.com/) if you need to adjust the captions/subtitles generated with this tools.
 
 
----
+# Todo
 
-### ~  5.Aeneas Node
+- [X] README for each component 
+- [ ] Create repo for individual components and publish separatly to npm.
+- [ ] See if there is a way to package Aeneas dependencies without requiring system wide installation 
+- [ ] See if there's a way to deal with punctuation library, eg punctuator, installing locally as self contained package, without relying on the API end point, eg for offline use.
 
-<!-- See module readme for more details -->
 
-Takes, plain text file, same as output of step above, and media source, audio or video, and creates captions file, srt. 
+# Contributors
 
-#### example
+Fee free to raise an issue or getting touch should you have any questions. Pull request welcome.
 
-```bash
-/usr/local/bin/aeneas_execute_task "./data/2017_07_19_11_26_13-Cd56vF3lZ_Q.mp4" "./examples/blaine.srt" "task_language=eng|os_task_file_format=srt|is_text_type=subtitles|is_audio_file_head_length=0|is_audio_file_tail_length=0|task_adjust_boundary_nonspeech_min=1.000|task_adjust_boundary_nonspeech_string=REMOVE|task_adjust_boundary_algorithm=percent|task_adjust_boundary_percent_value=75|is_text_file_ignore_regex=[*]" ./examples/2017_07_19_11_26_13-Cd56vF3lZ_Q.mp4.srt
-```
+- [Pietro](http://twitter.com/pietropassarell)
