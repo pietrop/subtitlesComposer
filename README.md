@@ -136,6 +136,7 @@ At the moment for UX/UI you can use the free software [`closedcaptioncreator`](h
 # Todo
 
 - [X] README for each component 
+- [ ] publish to npm 
 - [ ] Create repo for individual components and publish separatly to npm.
 - [ ] See if there is a way to package Aeneas dependencies without requiring system wide installation 
 - [ ] See if there's a way to deal with punctuation library, eg punctuator, installing locally as self contained package, without relying on the API end point, eg for offline use.
