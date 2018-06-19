@@ -182,6 +182,7 @@ and then text to speech generate
 synthetic voices at time codes that
 line up with the original original
 audio.
+```
 
 #### output
 
@@ -211,7 +212,7 @@ line up with the original original
 audio.
 ```
 
-#### algo 
+#### algo  
 
 ```perl
 # Insert new line for every two lines, preserving paragraphs
