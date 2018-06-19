@@ -228,7 +228,7 @@ perl -00 -ple 's/.*\n.*\n/$&\n/mg' test3.txt > "$f"
 
 Takes, plain text file, same as output of step above, and media source, audio or video, and creates captions file, srt. 
 
-#### example
+#### example 
 
 ```bash
 /usr/local/bin/aeneas_execute_task "./data/2017_07_19_11_26_13-Cd56vF3lZ_Q.mp4" "./examples/blaine.srt" "task_language=eng|os_task_file_format=srt|is_text_type=subtitles|is_audio_file_head_length=0|is_audio_file_tail_length=0|task_adjust_boundary_nonspeech_min=1.000|task_adjust_boundary_nonspeech_string=REMOVE|task_adjust_boundary_algorithm=percent|task_adjust_boundary_percent_value=75|is_text_file_ignore_regex=[*]" ./examples/2017_07_19_11_26_13-Cd56vF3lZ_Q.mp4.srt
