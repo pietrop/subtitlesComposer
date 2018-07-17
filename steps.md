@@ -33,8 +33,8 @@ Hi there, my name is Ian police - are recording this video to talk about mercury
 #### Out 
 
 Puts each sentence that ends with full stop on new line. `\n`.
-
-```
+ 
+``` 
 Hi there, my name is Ian police - are recording this video to talk about mercury for the folks at a tech daily conference in New York.
 Sorry, I can't be there in person, so we are building a prototype funded in part by Google DNI of a web-based computer, assisted transcription and translation tool with some video editing features.
 It does speech to text and then automated consistent translation and then text to speech generate synthetic voices at time codes that line up with the original original audio.
@@ -182,6 +182,7 @@ and then text to speech generate
 synthetic voices at time codes that
 line up with the original original
 audio.
+```
 
 #### output
 
@@ -211,7 +212,8 @@ line up with the original original
 audio.
 ```
 
-#### algo
+#### algo  
+
 ```perl
 # Insert new line for every two lines, preserving paragraphs
 perl -00 -ple 's/.*\n.*\n/$&\n/mg' test3.txt > "$f"
@@ -221,16 +223,13 @@ perl -00 -ple 's/.*\n.*\n/$&\n/mg' test3.txt > "$f"
 ---
 
 
-
----
-
 ### ~  5.Aeneas Node
 
 <!-- See module readme for more details -->
 
 Takes, plain text file, same as output of step above, and media source, audio or video, and creates captions file, srt. 
 
-#### example
+#### example 
 
 ```bash
 /usr/local/bin/aeneas_execute_task "./data/2017_07_19_11_26_13-Cd56vF3lZ_Q.mp4" "./examples/blaine.srt" "task_language=eng|os_task_file_format=srt|is_text_type=subtitles|is_audio_file_head_length=0|is_audio_file_tail_length=0|task_adjust_boundary_nonspeech_min=1.000|task_adjust_boundary_nonspeech_string=REMOVE|task_adjust_boundary_algorithm=percent|task_adjust_boundary_percent_value=75|is_text_file_ignore_regex=[*]" ./examples/2017_07_19_11_26_13-Cd56vF3lZ_Q.mp4.srt
