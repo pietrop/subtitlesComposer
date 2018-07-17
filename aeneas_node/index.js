@@ -15,8 +15,8 @@ var envVar =   {'ffmpeg': ffmpegPath , 'ffprobe': ffprobePath, 'espeak':espeakPa
 function runAeneasComand(config,cb){
 	///usr/local/bin/aeneas_execute_task///usr/local/bin/aeneas_execute_task  //python -m aeneas.tools.execute_task 
 	var aeneasComandString = `/usr/local/bin/aeneas_execute_task "${config.mediaFile}" "${config.segmentedTextInput}" "task_language=${config.language}|os_task_file_format=${config.captionFileFormat}|is_text_type=subtitles|is_audio_file_head_length=${config.audio_file_head_length}|is_audio_file_tail_length=${config.audio_file_tail_length}|task_adjust_boundary_nonspeech_min=1.000|task_adjust_boundary_nonspeech_string=REMOVE|task_adjust_boundary_algorithm=percent|task_adjust_boundary_percent_value=75|is_text_file_ignore_regex=[*]" ${config.outputCaptionFile}`;
-	// console.log("-------aeneasComandString---------");
-	// console.log(aeneasComandString);
+	console.log("-------aeneasComandString---------");
+	console.log(aeneasComandString);
 	// console.log("----------------");
 	var options ={env: envVar, cwd: appPath, PYTHONIOENCODING: 'UTF-8'};
 

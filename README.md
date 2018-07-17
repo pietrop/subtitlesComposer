@@ -141,6 +141,8 @@ At the moment for UX/UI you can use the free software [`closedcaptioncreator`](h
 - [ ] See if there is a way to package Aeneas dependencies without requiring system wide installation 
 - [ ] See if there's a way to deal with punctuation library, eg punctuator, installing locally as self contained package, without relying on the API end point, eg for offline use.
 
+-[ ] make `prepText` function that can prep for word level alignement. (by having each word on one line, to return json.)
+
 
 # Contributors
 
