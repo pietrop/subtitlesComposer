@@ -44,7 +44,11 @@ subtitlesComposer({
 	audio_file_tail_length: 0,
 	audio_file_head_length : 0,
 	captionFileFormat : captionFileFormat,
-	language: 'ita'
+	language: 'ita',
+	// optional path to aeneas binary. by defult it uses the path default system one on OSX
+	// so this can be used to use an aeneas appImage on linux
+	// omit attribute or use '' empty string to go to default
+	optionalPathToAeneasBinary: '/some/path/to/an/aenas/binary'
 
 	}, 
 	function(filePath){
