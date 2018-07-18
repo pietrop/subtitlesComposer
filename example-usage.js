@@ -7,7 +7,7 @@ var captionFileFormat = "srt";
 
 subtitleComposer({
     punctuationTextContent: punctuationTextContent,
-    numberOfCharPerLine: 42,
+    numberOfCharPerLine: 35,
     // where to save intermediate segmented text file needed for aeneas module 
     segmentedTextInput: './tmp/segmentedtext.tmp.txt',
     //audio or video file to use for aeneas alignement as original source 
@@ -16,8 +16,8 @@ subtitleComposer({
     audio_file_tail_length: 0,
     audio_file_head_length : 0,
     captionFileFormat : captionFileFormat,
-    language: 'ita'
-
+    language: 'ita',
+    optionalPathToAeneasBinary: ''
     }, 
     function(filePath){
         console.log('filePath', filePath);
