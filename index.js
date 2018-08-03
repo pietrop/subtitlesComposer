@@ -11,7 +11,7 @@ function subtitlesComposer(config, cb){
 
 
 	prepText(config, function(text){
-		fs.writeFileSync(config.segmentedTextInput, text);
+		fs.writeFileSync(config.segmentedTextInput, text, {mode: 0o777});
 		// - 5.Aeneas `-->` subtitl file -
 		runAeneasComand(config, function(srtFilePath){
 			// var result = fs.readFileSync(srtFilePath,'utf8').toString('utf8');	
