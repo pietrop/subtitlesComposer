@@ -8,11 +8,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@bitbucket.org/pietrop/subtitlecomposer.git"
+    "url": "https://github.com/pietrop/subtitlesComposer"
   },
   "author": "Pietro Passarelli <pietro.passarelli@gmail.com> (http://pietropassarelli.com)",
   "license": "ISC",
-  "homepage": "https://bitbucket.org/pietrop/subtitlecomposer#readme",
+  "homepage": "https://github.com/pietrop/subtitlesComposer#readme",
   "devDependencies": {
     "jest": "^22.4.2"
   },
