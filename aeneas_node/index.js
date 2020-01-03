@@ -5,7 +5,8 @@ const fs = require('fs');
 
 var appPath = './examples';
 
-var aeneasPath = "/usr/local/bin/aeneas_execute_task";
+// var aeneasPath = "/usr/local/bin/aeneas_execute_task";
+var aeneasPath = "aeneas_execute_task";
 var ffmpegPath = "/usr/local/bin/ffmpeg";
 var ffprobePath = "/usr/local/bin/ffprobe";
 var espeakPath = "/usr/local/bin/espeak";
@@ -13,7 +14,8 @@ var envVar =   {'ffmpeg': ffmpegPath , 'ffprobe': ffprobePath, 'espeak':espeakPa
 
 
 function runAeneasComand(config,cb){
-	let aeneasBinaryPath = "/usr/local/bin/aeneas_execute_task";
+	// let aeneasBinaryPath = "/usr/local/bin/aeneas_execute_task";
+	let aeneasBinaryPath = "aeneas_execute_task";
 	if(config.optionalPathToAeneasBinary){
 		aeneasBinaryPath = config.optionalPathToAeneasBinary;
 	}
