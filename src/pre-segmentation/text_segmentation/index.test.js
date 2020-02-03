@@ -10,7 +10,7 @@ It does speech to text and then automated consistent translation and then text t
 
 var optionalHonorificsSample = "Mr";
 
-test('add line break between sentences', () => {
+test.skip('add line break between sentences', () => {
 	var result = textSegmentation(sampleText);
   	expect(result).toBe(expectedOutput);
 });

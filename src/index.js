@@ -1,6 +1,6 @@
 "use strict";
 const fs = require('fs');
-const prepText =require("./aeneas_subtitles_lines_prep_script.js");
+const prepText =require("./pre-segmentation/aeneas_subtitles_lines_prep_script.js");
 const runAeneasComand = require('./aeneas_node/index.js');
 // - 0.Punctuation 
 
@@ -8,8 +8,6 @@ const runAeneasComand = require('./aeneas_node/index.js');
 //TODO: define config vars for this function, 
 //tmp folder etc..
 function subtitlesComposer(config, cb){
-
-
 	prepText(config, function(text){
 		fs.writeFileSync(config.segmentedTextInput, text, {mode: 0o777});
 		// - 5.Aeneas `-->` subtitl file -
@@ -23,6 +21,8 @@ function subtitlesComposer(config, cb){
 }
 
 module.exports = subtitlesComposer;
+module.exports.prepText = prepText;
+module.exports.runAeneasComand = runAeneasComand;
 
 
 //////////////////

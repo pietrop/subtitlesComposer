@@ -2,9 +2,11 @@
   "name": "subtitlescomposer",
   "version": "1.0.0",
   "description": "Node module that given audio or video media source and corresponding  plain texttranscription without timecodes, realign the texts and produces a subtitle file, eg `srt`.",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "example-usage": "node  src/example-usage.js",
+    "example-usage:presegmentation": "node  src/pre-segmentation/example-usage.js"
   },
   "repository": {
     "type": "git",
@@ -14,7 +16,7 @@
   "license": "ISC",
   "homepage": "https://github.com/pietrop/subtitlesComposer#readme",
   "devDependencies": {
-    "jest": "^22.4.2"
+    "jest": "^25.1.0"
   },
   "dependencies": {
     "sbd": "^1.0.12"
